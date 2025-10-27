@@ -1,0 +1,28 @@
+﻿@{
+    ViewData["Title"] = "Movie Manager";
+}
+
+<div class="container mt-5">
+    <div class="text-center">
+        <h1 class="display-4 text-primary">🎬 Movie Manager</h1>
+        <p class="lead mt-3">Manage your movies, genres, and ratings easily.</p>
+
+        <a asp-controller="Movies" asp-action="Index" class="btn btn-lg btn-success mt-4">
+            <i class="fa-solid fa-film"></i> View Movies
+        </a>
+    </div>
+
+    <div class="row mt-5 justify-content-center">
+        <div class="col-md-8">
+            <div class="card bg-light shadow-sm p-4">
+                <h3 class="text-secondary">Features</h3>
+                <ul class="list-group list-group-flush mt-3">
+                    <li class="list-group-item">Add, edit, and delete movies</li>
+                    <li class="list-group-item">Upload and preview posters</li>
+                    <li class="list-group-item">Assign genres and ratings</li>
+                    <li class="list-group-item">View detailed information about each movie</li>
+                </ul>
+            </div>
+        </div>
+    </div>
+</div>

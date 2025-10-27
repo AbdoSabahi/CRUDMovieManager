@@ -1,0 +1,41 @@
+﻿@model Movie
+@{
+    ViewData["Title"] = "Details";
+}
+
+
+<div class=" container  row">
+
+    <div class="col-4">
+        <img 
+             
+             src="~/posters/@Model.Poster"
+             alt="Poster"
+             class="img-thumbnail"
+             style="width:300px; height:auto;" />
+    </div>
+
+
+    <div class="col-8">
+        <div class="d-flex justify-content-between">
+            <h2>@Model.Titel</h2>
+            <p>
+                <i class="fa-solid fa-star text-warning"></i>
+                @Model.Rate
+            </p>
+        </div>
+        <div class="d-flex  align-items-center ">
+            <p>@Model.Year</p>
+            <p class="mx-5">@Model.Genre?.Name</p>
+        </div>
+        <p>@Model.Storline</p>
+
+
+    </div>
+
+    <a asp-action="Index" class="btn btn-secondary mt-5 col-4">Back to List</a>
+
+
+</div>
+
+

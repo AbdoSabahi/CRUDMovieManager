@@ -1,0 +1,125 @@
+﻿@model MovieFormViewModel
+@{
+    ViewData["Title"] = "Create";
+}
+
+
+
+@{
+    ViewData["Title"] = Model.Id == 0 ? "Add New Movie" : "Edit Movie";
+}
+
+<div class="container mt-5">
+    <h2 class="mb-4 text-primary text-center">@(Model.Id == 0 ? "Create Movie" : "Edit Movie")</h2>
+
+    <div class="row justify-content-center">
+        <!--FORM -->
+        <div class="col-md-5">
+            <form asp-action="Create" method="post" enctype="multipart/form-data">
+                <input type="hidden" asp-for="Id" />
+
+                <!-- Title -->
+                <div class="mb-3">
+                    <label asp-for="Title" class="form-label fw-semibold"></label>
+                    <input asp-for="Title" class="form-control" maxlength="250" />
+                    <span asp-validation-for="Title" class="text-danger"></span>
+                </div>
+
+                <!-- Year -->
+                <div class="mb-3">
+                    <label asp-for="Year" class="form-label fw-semibold"></label>
+                    <input asp-for="Year" class="form-control" type="text"  />
+                    <span asp-validation-for="Year" class="text-danger"></span>
+                </div>
+
+                <!-- Rate -->
+                <div class="mb-3">
+                    <label asp-for="Rate" class="form-label fw-semibold"></label>
+                    <input asp-for="Rate" class="form-control" type="number" step="0.1" min="1" max="10" />
+                    <span asp-validation-for="Rate" class="text-danger"></span>
+                </div>
+
+                <!-- Genre -->
+                <div class="mb-3">
+                    <label asp-for="GenreId" class="form-label fw-semibold"></label>
+                    <select asp-for="GenreId" asp-items="Model.Genres" class="form-select">
+                        <option value="">-- Select Genre --</option>
+                    </select>
+                    <span asp-validation-for="GenreId" class="text-danger"></span>
+                </div>
+
+                <!-- Poster -->
+                <div class="mb-3">
+                    <label asp-for="Poster" class="form-label fw-semibold"></label>
+                    <input asp-for="Poster" class="form-control" type="file" accept=".jpg,.jpeg,.png" />
+                    <span asp-validation-for="Poster" class="text-danger"></span>
+                </div>
+
+                <!-- Storyline -->
+                <div class="mb-3">
+                    <label asp-for="Storyline" class="form-label fw-semibold"></label>
+                    <textarea asp-for="Storyline" class="form-control" rows="4" maxlength="2500" style="resize:none;"></textarea>
+                    <span asp-validation-for="Storyline" class="text-danger"></span>
+                </div>
+
+                <!-- Buttons -->
+                <div class="d-flex justify-content-between mt-4">
+                    <button type="submit" class="btn btn-primary w-50 me-2">
+                        <i class="fa-solid fa-check"></i> Save
+                    </button>
+                    <a asp-action="Index" class="btn btn-outline-secondary w-50">
+                        <i class="fa-solid fa-xmark"></i> Cancel
+                    </a>
+                </div>
+            </form>
+        </div>
+
+        <!-- Y break-->
+        <div class="col-md-1"></div>
+
+        <!-- image -->
+        <div class="col-md-5 d-flex flex-column align-items-center">
+            <h5 class="text-secondary mb-3">Poster Preview</h5>
+
+            <div id="poster-container"
+                 class="border rounded p-2 bg-light d-flex align-items-center justify-content-center"
+                 style="min-height:300px;">
+                <img id="poster-preview"
+                     src="#"
+                     alt="Poster preview"
+                     class="img-thumbnail d-none"
+                     style="width:100%; max-width:350px; height:auto;" />
+            </div>
+        </div>
+
+    </div>
+</div>
+
+@section Scripts {
+    <partial name="_ValidationScriptsPartial" />
+
+    <script>
+        // ✅ عند اختيار صورة البوستر، يتم عرضها فورًا في المعاينة على اليمين
+        document.getElementById('Poster').addEventListener('change', function (event) {
+            const file = event.target.files[0];
+            const preview = document.getElementById('poster-preview');
+            const container = document.getElementById('poster-container');
+
+            if (file) {
+                const reader = new FileReader();
+                reader.onload = function (e) {
+                    preview.src = e.target.result;
+                    preview.classList.remove('d-none');
+                    container.style.display = 'flex';
+                };
+                reader.readAsDataURL(file);
+            } else {
+                preview.classList.add('d-none');
+                container.style.display = 'none';
+            }
+        });
+
+
+        $('#Year').datepicker({ format: 'yyyy', viewMode: 'years', minViewMode: 'years', autoclose: true, startDate: new Date('1950-01-01'), endDate: new Date() });
+    </script>
+}
